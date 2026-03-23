@@ -7,7 +7,14 @@
 const getWsBaseUrl = () => {
   if (import.meta.env.VITE_WS_URL) {
     const u = String(import.meta.env.VITE_WS_URL).trim()
-    return u.startsWith('http') ? u.replace(/^http/, 'ws') : u
+    // Convert http:// to ws:// and https:// to wss://
+    if (u.startsWith('https://')) {
+      return u.replace(/^https:\/\//, 'wss://')
+    }
+    if (u.startsWith('http://')) {
+      return u.replace(/^http:\/\//, 'ws://')
+    }
+    return u
   }
   // In dev, backend is always on port 8000 (same machine)
   if (import.meta.env.DEV) {
