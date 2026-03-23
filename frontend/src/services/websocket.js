@@ -4,7 +4,7 @@
  * API keys are never used in frontend; backend uses HF_TOKEN from env.
  */
 
-// Backend URL on Render
+// Backend URL on Render - Updated for production
 const BACKEND_URL = 'https://aiclone-hbue.onrender.com'
 
 const getWsBaseUrl = () => {
