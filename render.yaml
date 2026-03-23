@@ -11,6 +11,6 @@ services:
       - key: HF_MODEL
         value: mistralai/Mistral-7B-Instruct-v0.2
       - key: CORS_ORIGINS
-        value: https://frontend-ruby-six-94.vercel.app,http://localhost:5173,http://localhost:3000
+        value: https://aiclone-liard.vercel.app,http://localhost:5173,http://localhost:3000
       - key: RATE_LIMIT_REQUESTS_PER_MINUTE
         value: 30
