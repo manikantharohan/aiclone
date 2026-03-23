@@ -4,26 +4,23 @@
  * API keys are never used in frontend; backend uses HF_TOKEN from env.
  */
 
+// Hardcoded backend URL - REPLACE THIS WITH YOUR RENDER URL
+const BACKEND_URL = 'https://aiclone-backend.onrender.com'
+
 const getWsBaseUrl = () => {
+  // Use environment variable if set
   if (import.meta.env.VITE_WS_URL) {
     const u = String(import.meta.env.VITE_WS_URL).trim()
-    // Convert http:// to ws:// and https:// to wss://
-    if (u.startsWith('https://')) {
-      return u.replace(/^https:\/\//, 'wss://')
-    }
-    if (u.startsWith('http://')) {
-      return u.replace(/^http:\/\//, 'ws://')
-    }
+    if (u.startsWith('https://')) return u.replace(/^https:\/\//, 'wss://')
+    if (u.startsWith('http://')) return u.replace(/^http:\/\//, 'ws://')
     return u
   }
-  // In dev, backend is always on port 8000 (same machine)
+  // In dev, use localhost
   if (import.meta.env.DEV) {
     return 'ws://localhost:8000'
   }
-  const { protocol, hostname } = window.location
-  const wsProtocol = protocol === 'https:' ? 'wss:' : 'ws:'
-  const port = window.location.port || ''
-  return `${wsProtocol}//${hostname}${port ? ':' + port : ''}`
+  // In production, use hardcoded backend
+  return BACKEND_URL.replace(/^https:\/\//, 'wss://')
 }
 
 export function buildChatWsUrl(sessionId, { temperature, maxTokens } = {}) {
